@@ -1,0 +1,33 @@
+.menu {
+    flex: 1;
+    overflow-y: auto;
+    background: none;
+    .menu-item {
+        position: relative;
+        a {
+            display: block;
+            line-height: 30px;
+            cursor: pointer;
+            color: var(--color-subtle);
+            padding: 0 15px;
+            transition-duration: .1s;
+            &.active {
+                background-color: #d3dce6;
+            }
+            &:hover:not(.showactive) {
+                background-color: #d1dbe5;
+            }
+            &.showactive {
+                cursor: default;
+            }
+        }
+        .submenu {
+            a {
+                padding-left: 25px;
+            }
+        }
+    }
+    .collapse-transition {
+        transition: height .3s ease-in-out, padding-top .3s ease-in-out, padding-bottom .3s ease-in-out;
+    }
+}

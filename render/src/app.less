@@ -1,0 +1,72 @@
+.app {
+    display: flex;
+    min-height: 100%;
+    height: 100%;
+    .nav {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 150px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border-right: 1px solid #ccc;
+        background-color: #d2d2d2;
+        color: var(--color-subtle);
+        border-right: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        &>header {
+            text-align: center;
+            line-height: 50px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        &>footer {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+            &>a {
+                display: block;
+                width: 100%;
+                padding: 0;
+                line-height: 2;
+                font: inherit;
+                font-size: 13px;
+                color: inherit;
+                border: none;
+                background-color: transparent;
+                outline: none;
+                text-align: center;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+    .main {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        .section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            color: var(--color-accent);
+            pointer-events: none;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: visibility 0s .12s linear, opacity .12s ease-in, transform .12s ease-in;
+            &.active {
+                pointer-events: auto;
+                visibility: visible;
+                opacity: 1;
+                transform: translateX(0);
+                transition: visibility 0s 0s linear, opacity .36s ease-out, transform .36s ease-out;
+            }
+        }
+    }
+}

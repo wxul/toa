@@ -34,7 +34,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader', 'autoprefixer-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.less$/,
@@ -49,14 +49,20 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            'vue': 'vue/dist/vue.js',
+            'vue': 'vue/dist/vue.common.js',
             '@render': path.resolve(__dirname, '../render'),
-            '@src': path.resolve(__dirname, '../render/src')
+            '@src': path.resolve(__dirname, '../render/src'),
+            '@assets': path.resolve(__dirname, '../render/assets'),
+            '@utils': path.resolve(__dirname, '../render/utils'),
+            '@components': path.resolve(__dirname, '../render/src/components'),
+            '@store': path.resolve(__dirname, '../render/src/store'),
+            '@page': path.resolve(__dirname, '../render/src/pages')
         }
     },
     plugins: [
         new webpack.DefinePlugin({
-            ENV: JSON.stringify(process.env.NODE_ENV)
+            ENV: JSON.stringify(process.env.NODE_ENV),
+            DEBUG: JSON.stringify((process.env.NODE_ENV == 'development')),
         })
     ]
 };
