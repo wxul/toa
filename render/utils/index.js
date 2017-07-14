@@ -1,6 +1,7 @@
-const isServer = typeof window == 'undefined';
+const isServer = typeof window !== 'undefined';
+
 const on = (function () {
-    if (!isServer && document.addEventListener) {
+    if (typeof window !== 'undefined' && document.addEventListener) {
         return function (element, event, handler) {
             if (element && event && handler) {
                 element.addEventListener(event, handler, false);
@@ -15,7 +16,7 @@ const on = (function () {
     }
 })();
 const off = (function () {
-    if (!isServer && document.removeEventListener) {
+    if (typeof window !== 'undefined' && document.removeEventListener) {
         return function (element, event, handler) {
             if (element && event) {
                 element.removeEventListener(event, handler, false);

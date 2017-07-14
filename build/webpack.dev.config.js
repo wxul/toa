@@ -13,7 +13,7 @@ var config = Object.assign({}, baseconfig, {
         path: APP_PATH,
         publicPath: './',
         filename: '[name].js',
-        chunkFilename: '[name],[chunkhash].min.js'
+        chunkFilename: '[name].[chunkhash].min.js'
     }
 });
 

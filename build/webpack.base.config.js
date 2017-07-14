@@ -16,16 +16,16 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: require.resolve("../render/utils/llqrcode.js"),
-                loader: "exports?qrcode"
-            }, {
-                test: require.resolve("../render/utils/qrcanvas.js"),
-                loader: "exports?createQRImage"
-            }, {
-                test: require.resolve("../render/utils/qrcode.js"),
-                loader: "exports?QRCode&QRErrorCorrectLevel"
-            },
+            // {
+            //     test: require.resolve("../render/utils/llqrcode.js"),
+            //     loader: "exports?qrcode"
+            // }, {
+            //     test: require.resolve("../render/utils/qrcanvas.js"),
+            //     loader: "exports?createQRImage"
+            // }, {
+            //     test: require.resolve("../render/utils/qrcode.js"),
+            //     loader: "exports?QRCode&QRErrorCorrectLevel"
+            // },
             {
                 test: /\.vue$/, loader: 'vue-loader', include: include
             },
