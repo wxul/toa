@@ -14,7 +14,8 @@
   "dependencies": {
     "cross-env": "^5.0.1",
     "glob": "^7.1.2",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "vue-color": "^2.2.1"
   },
   "devDependencies": {
     "babel": "^6.23.0",

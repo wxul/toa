@@ -5,7 +5,7 @@ if (true) {
         _extend,
         _isObject;
 
-    _isObject = function (o) {
+    _isObject = function(o) {
         return Object.prototype.toString.call(o) === '[object Object]';
     }
 
@@ -30,7 +30,7 @@ if (true) {
     }
 
     var $ = new Object();
-    $.extend = function () {
+    $.extend = function() {
         var arr = arguments,
             result = {},
             i;
@@ -56,37 +56,37 @@ function createQRImage(P, Q, X) {
         d = a.length;
         for (c = 0; c < d; c++)
             e = a.charCodeAt(c),
-                1 <= e && 127 >= e ? b += a.charAt(c) : 2047 < e ? (b += String.fromCharCode(224 | e >> 12 & 15),
-                    b += String.fromCharCode(128 | e >> 6 & 63),
-                    b += String.fromCharCode(128 | e >> 0 & 63)) : (b += String.fromCharCode(192 | e >> 6 & 31),
-                        b += String.fromCharCode(128 | e >> 0 & 63));
+            1 <= e && 127 >= e ? b += a.charAt(c) : 2047 < e ? (b += String.fromCharCode(224 | e >> 12 & 15),
+                b += String.fromCharCode(128 | e >> 6 & 63),
+                b += String.fromCharCode(128 | e >> 0 & 63)) : (b += String.fromCharCode(192 | e >> 6 & 31),
+                b += String.fromCharCode(128 | e >> 0 & 63));
         return b
     }
     var l = {
-        text: "",
-        level: "L",
-        width: 300,
-        margin: 10,
-        round: 0,
-        isWater: !1,
-        bgColor: "#fff",
-        fgColor: "#000",
-        inptColor: null,
-        ptColor: null,
-        gcColor: null,
-        gradientWay: "0",
-        background: null,
-        foreground: null,
-        logoimg: null,
-        logoType: "border",
-        pinType: 0,
-        paintColor: "#f00",
-        fontEffect: "default",
-        fontSize: 28,
-        ftColor: null,
-        content: null,
-        rotate: 0
-    },
+            text: "",
+            level: "L",
+            width: 300,
+            margin: 10,
+            round: 0,
+            isWater: !1,
+            bgColor: "#fff",
+            fgColor: "#000",
+            inptColor: null,
+            ptColor: null,
+            gcColor: null,
+            gradientWay: "0",
+            background: null,
+            foreground: null,
+            logoimg: null,
+            logoType: "border",
+            pinType: 0,
+            paintColor: "#f00",
+            fontEffect: "default",
+            fontSize: 28,
+            ftColor: null,
+            content: null,
+            rotate: 0
+        },
         a = $.extend({}, l, Q),
         u = this,
         D = document.getElementById(P),
@@ -100,7 +100,7 @@ function createQRImage(P, Q, X) {
         L = 0,
         y = !1,
         w = !1;
-    this.drawImage = function (f) {
+    this.drawImage = function(f) {
         f = f || G;
         var b = D.getContext("2d");
         if (D.width = D.height = a.width,
@@ -123,11 +123,11 @@ function createQRImage(P, Q, X) {
                 g = pt_top = Math.floor(a.margin - d),
                 p = pt_bottom = Math.ceil(a.width - a.margin - 8 * d);
             switch (b.save(),
-            b.beginPath(),
-            b.fillStyle = a.ptColor || a.fgColor,
-            b.fillRect(a.margin - d + 1, a.margin - d + 1, 9 * d - 2, 9 * d - 2),
-            b.fillStyle = a.inptColor || a.fgColor,
-            a.pinType) {
+                b.beginPath(),
+                b.fillStyle = a.ptColor || a.fgColor,
+                b.fillRect(a.margin - d + 1, a.margin - d + 1, 9 * d - 2, 9 * d - 2),
+                b.fillStyle = a.inptColor || a.fgColor,
+                a.pinType) {
                 case 7:
                     b.moveTo(4 * d + a.margin - d, 3 * d + a.margin - d);
                     b.lineTo(5.64 * d + a.margin - d, 3.4 * d + a.margin - d);
@@ -203,16 +203,16 @@ function createQRImage(P, Q, X) {
                         m(e - 1, g) || m(e, g + 1) || m(e - 1, g + 1) ? I(b, g, e, 1) : A(b, g, e, 1),
                         m(e + 1, g) || m(e, g + 1) || m(e + 1, g + 1) ? I(b, g, e, 2) : A(b, g, e, 2),
                         m(e + 1, g) || m(e, g - 1) || m(e + 1, g - 1) ? I(b, g, e, 3) : A(b, g, e, 3)) : (A(b, g, e, 0),
-                            A(b, g, e, 1),
-                            A(b, g, e, 2),
-                            A(b, g, e, 3)) : b.rect(Math.round(g * d + a.margin) + .5, Math.round(e * d + a.margin) + .5, Math.round(d), Math.round(d)),
+                        A(b, g, e, 1),
+                        A(b, g, e, 2),
+                        A(b, g, e, 3)) : b.rect(Math.round(g * d + a.margin) + .5, Math.round(e * d + a.margin) + .5, Math.round(d), Math.round(d)),
                     b.closePath(),
                     null != a.foreground ? T(b) : (b.fill(),
                         b.stroke())) : a.isWater && (c = F[e][g] ? a.paintColor : a.ptColor || a.inptColor ? S(e, g, h) : a.fgColor,
-                            H(e, g, h) || (m(e - 1, g) && m(e, g - 1) && J(b, g, e, 0, c),
-                                m(e + 1, g) && m(e, g - 1) && J(b, g, e, 3, c),
-                                m(e + 1, g) && m(e, g + 1) && J(b, g, e, 2, c),
-                                m(e - 1, g) && m(e, g + 1) && J(b, g, e, 1, c)));
+                    H(e, g, h) || (m(e - 1, g) && m(e, g - 1) && J(b, g, e, 0, c),
+                        m(e + 1, g) && m(e, g - 1) && J(b, g, e, 3, c),
+                        m(e + 1, g) && m(e, g + 1) && J(b, g, e, 2, c),
+                        m(e - 1, g) && m(e, g + 1) && J(b, g, e, 1, c)));
         b.restore();
         for (e = 0; e < a.rotate; e++) {
             c = b;
@@ -226,16 +226,16 @@ function createQRImage(P, Q, X) {
             t = t.width;
             for (let i = 0; i < n; i += 4)
                 v = i % (4 * t) * t + 4 * (t - Math.floor(i / t / 4) - 1),
-                    p[v] = g[i],
-                    p[v + 1] = g[i + 1],
-                    p[v + 2] = g[i + 2],
-                    p[v + 3] = g[i + 3];
+                p[v] = g[i],
+                p[v + 1] = g[i + 1],
+                p[v + 2] = g[i + 2],
+                p[v + 3] = g[i + 3];
             c.putImageData(h, 0, 0);
             c.restore()
         }
         if (null != a.logoimg && "L" != a.level)
             switch (c = a.width / l.width,
-            a.logoType) {
+                a.logoType) {
                 case "icon":
                     h = a.logoimg;
                     e = 3 * c;
@@ -280,9 +280,9 @@ function createQRImage(P, Q, X) {
                     for (t = 0; t < 2 * e + 1; t++)
                         for (v = 0; v < 2 * e + 1; v++)
                             b.save(),
-                                b.shadowOffsetX = -e - 2E3 + v,
-                                b.shadowOffsetY = -e + t,
-                                b.drawImage(h, g + 2E3, p, n, c);
+                            b.shadowOffsetX = -e - 2E3 + v,
+                            b.shadowOffsetY = -e + t,
+                            b.drawImage(h, g + 2E3, p, n, c);
                     b.drawImage(h, g, p, n, c);
                     b.restore();
                     b.shadowOffsetX = 0;
@@ -295,11 +295,11 @@ function createQRImage(P, Q, X) {
             c = a.gcColor ? N(b, a.fgColor, a.width / 2) : a.fgColor;
             h = a.width / l.width;
             switch (b.globalCompositeOperation = "source-over",
-            b.save(),
-            b.textBaseline = "middle",
-            b.textAlign = "center",
-            b.font = "bold " + a.fontSize * h + "px KaiTi_GB2312",
-            a.fontEffect) {
+                b.save(),
+                b.textBaseline = "middle",
+                b.textAlign = "center",
+                b.font = "bold " + a.fontSize * h + "px KaiTi_GB2312",
+                a.fontEffect) {
                 case "in":
                     b.lineWidth = 8 * h;
                     b.fillStyle = c;
@@ -321,8 +321,8 @@ function createQRImage(P, Q, X) {
                     b.strokeStyle = "#fff";
                     for (c = 0; c < r; c++)
                         b.globalAlpha = (c + 1) / r,
-                            b.strokeText(a.content, a.width / 2, a.width / 2 - r + c),
-                            b.fillText(a.content, a.width / 2, a.width / 2 - r + c);
+                        b.strokeText(a.content, a.width / 2, a.width / 2 - r + c),
+                        b.fillText(a.content, a.width / 2, a.width / 2 - r + c);
                     break;
                 case "3d":
                     r = 5 * h;
@@ -331,8 +331,8 @@ function createQRImage(P, Q, X) {
                     b.strokeStyle = "#fff";
                     for (c = 0; c < r; c++)
                         b.globalAlpha = (c + 1) / r,
-                            b.strokeText(a.content, a.width / 2 + r - 2 * c, a.width / 2 - r + c),
-                            b.fillText(a.content, a.width / 2 + r - 2 * c, a.width / 2 - r + c);
+                        b.strokeText(a.content, a.width / 2 + r - 2 * c, a.width / 2 - r + c),
+                        b.fillText(a.content, a.width / 2 + r - 2 * c, a.width / 2 - r + c);
                     break;
                 case "light":
                     b.lineWidth = 2 * h;
@@ -356,83 +356,83 @@ function createQRImage(P, Q, X) {
         }
         f()
     };
-    this.changeContent = function (f, b) {
+    this.changeContent = function(f, b) {
         a.content = f;
         this.drawImage()
     };
-    this.changeText = function (f, b) {
+    this.changeText = function(f, b) {
         b = b ? b : this.nullFn;
         a.text = f;
         z(b)
     };
-    this.changeLevel = function (f) {
+    this.changeLevel = function(f) {
         a.level = f;
         z()
     };
-    this.changeBgColor = function (f) {
+    this.changeBgColor = function(f) {
         a.background = null;
         a.bgColor = f;
         this.drawImage()
     };
-    this.changeFgColor = function (f) {
+    this.changeFgColor = function(f) {
         a.foreground = null;
         a.fgColor = f;
         this.drawImage()
     };
-    this.changePtColor = function (f) {
+    this.changePtColor = function(f) {
         a.foreground = null;
         a.ptColor = f;
         this.drawImage()
     };
-    this.changeInPtColor = function (f) {
+    this.changeInPtColor = function(f) {
         a.foreground = null;
         a.inptColor = f;
         this.drawImage()
     };
-    this.changeGcColor = function (f, b) {
+    this.changeGcColor = function(f, b) {
         a.foreground = null;
         a.gradientWay = f;
         a.gcColor = b;
         this.drawImage()
     };
-    this.changeGradientWay = function (f, b) {
+    this.changeGradientWay = function(f, b) {
         a.foreground = null;
         a.gradientWay = f;
         a.gcColor = b;
         this.drawImage()
     };
-    this.changeBackground = function (a) {
+    this.changeBackground = function(a) {
         O(a, "background")
     };
-    this.changeForeground = function (a) {
+    this.changeForeground = function(a) {
         O(a, "foreground")
     };
-    this.changeLogoimg = function (f, b) {
+    this.changeLogoimg = function(f, b) {
         a.logoType = b;
         a.level = "H";
         O(f, "logoimg")
     };
-    this.changeLogotype = function (f) {
+    this.changeLogotype = function(f) {
         a.logoType = f;
         this.drawImage()
     };
-    this.changeFtColor = function (f) {
+    this.changeFtColor = function(f) {
         a.ftColor = f;
         this.drawImage()
     };
-    this.changeFontEffect = function (f) {
+    this.changeFontEffect = function(f) {
         a.fontEffect = f;
         this.drawImage()
     };
-    this.changeFontSize = function (f) {
+    this.changeFontSize = function(f) {
         a.fontSize = f;
         this.drawImage()
     };
-    this.changeMargin = function (f) {
+    this.changeMargin = function(f) {
         a.margin = parseInt(f);
         this.drawImage()
     };
-    this.changeWidth = function (f) {
+    this.changeWidth = function(f) {
         a.width = 300 < f ? 300 : f;
         B = f;
         this.drawImage()
@@ -446,21 +446,21 @@ function createQRImage(P, Q, X) {
             }) : u.drawImage()
         }
         ;*/
-    this.changeRotate = function (f) {
+    this.changeRotate = function(f) {
         a.rotate = parseInt(f);
         this.drawImage()
     };
 
-    this.changeTemplate = function (f) {
+    this.changeTemplate = function(f) {
         a = $.extend({}, l, f);
         this.drawImage()
     };
-    this.changeRound = function (f, b) {
+    this.changeRound = function(f, b) {
         a.isWater = f;
         a.round = d * b;
         this.drawImage()
     };
-    this.setRound = function (f, b) {
+    this.setRound = function(f, b) {
         a.isWater = f;
         a.round = d * b
     };
@@ -474,74 +474,74 @@ function createQRImage(P, Q, X) {
             this.drawImage()
         }
         ;*/
-    this.resetMargin = function () {
+    this.resetMargin = function() {
         a.margin = l.margin;
         this.drawImage()
     };
-    this.resetBgColor = function () {
+    this.resetBgColor = function() {
         a.bgColor = l.bgColor;
         this.drawImage()
     };
-    this.resetFgColor = function () {
+    this.resetFgColor = function() {
         a.fgColor = l.fgColor;
         this.drawImage()
     };
-    this.resetPtColor = function () {
+    this.resetPtColor = function() {
         a.ptColor = l.ptColor;
         this.drawImage()
     };
-    this.resetInPtColor = function () {
+    this.resetInPtColor = function() {
         a.inptColor = l.inptColor;
         this.drawImage()
     };
-    this.resetGcColor = function () {
+    this.resetGcColor = function() {
         a.gcColor = l.gcColor;
         this.drawImage()
     };
-    this.resetBackground = function () {
+    this.resetBackground = function() {
         a.background = l.background;
         this.drawImage()
     };
-    this.resetForeground = function () {
+    this.resetForeground = function() {
         a.foreground = l.foreground;
         this.drawImage()
     };
-    this.clearLogoimg = function () {
+    this.clearLogoimg = function() {
         a.logoimg = l.logoimg
     };
-    this.resetLogoimg = function (f) {
+    this.resetLogoimg = function(f) {
         a.logoimg = l.logoimg;
         a.logoimg || a.content || (a.level = l.level,
             k = {},
             f());
         z()
     };
-    this.resetContent = function (f) {
+    this.resetContent = function(f) {
         a.content = l.content;
         a.logoimg || a.content || (a.level = l.level,
             k = {},
             f());
         z()
     };
-    this.resetFtColor = function () {
+    this.resetFtColor = function() {
         a.ftColor = l.ftColor;
         this.drawImage()
     };
-    this.resetRound = function () {
+    this.resetRound = function() {
         a.round = l.round;
         this.drawImage()
     };
-    this.resetPaint = function () {
+    this.resetPaint = function() {
         paint_data = [];
         this.drawImage()
     };
-    this.resetAll = function () {
+    this.resetAll = function() {
         var f = a.text;
         a = $.extend({}, l, Q);
         a.text = f;
         z()
     };
-    this.getBase64 = function (f) {
+    this.getBase64 = function(f) {
         f = f || G;
         var b = "";
         if (B != a.width) {
@@ -564,15 +564,15 @@ function createQRImage(P, Q, X) {
             b = D.toDataURL().substring(22);
         f(b)
     };
-    var G = function () { },
-        V = function (a, b) {
+    var G = function() {},
+        V = function(a, b) {
             function c(e) {
                 if (!(e < a.length))
                     return void b(d);
                 var g = new Image;
                 g.src = a[e];
                 d.push(g);
-                g.onload = function () {
+                g.onload = function() {
                     c(++e)
                 }
             }
@@ -580,14 +580,14 @@ function createQRImage(P, Q, X) {
             var d = [];
             0 < a.length ? c(0) : b()
         },
-        O = function (f, b) {
+        O = function(f, b) {
             var c = f.target.files[0];
             if (c.type && !/image\/\w+/.test(c.type))
                 return alert("\u8bf7\u786e\u4fdd\u6587\u4ef6\u4e3a\u56fe\u50cf\u7c7b\u578b"), !1;
             var d = new FileReader;
             d.readAsDataURL(c);
-            d.onload = function (c) {
-                V([this.result], function (c) {
+            d.onload = function(c) {
+                V([this.result], function(c) {
                     a[b] = c[0];
                     if ("logoimg" == b) {
                         var f;
@@ -613,16 +613,16 @@ function createQRImage(P, Q, X) {
                                     q = Math.floor(.3 * q)
                             }
                             f = (0 < f && (Math.max(f, e) < q ? (c = f,
-                                d = e) : f > e ? (c = q,
+                                    d = e) : f > e ? (c = q,
                                     d = Math.floor(q / f * e)) : (d = q,
-                                        c = Math.floor(q / e * f)),
+                                    c = Math.floor(q / e * f)),
                                 h = Math.floor(l.width / 2 - c / 2),
                                 m = Math.floor(l.width / 2 - d / 2)), {
-                                    left: h,
-                                    top: m,
-                                    width: c,
-                                    height: d
-                                })
+                                left: h,
+                                top: m,
+                                width: c,
+                                height: d
+                            })
                         } else
                             f = void 0;
                         k = f;
@@ -632,7 +632,7 @@ function createQRImage(P, Q, X) {
                 })
             }
         },
-        z = function (f) {
+        z = function(f) {
             f = f || G;
             var b = new QRCode(-1, QRErrorCorrectLevel[a.level]);
             b.addData(W(a.text));
@@ -645,16 +645,16 @@ function createQRImage(P, Q, X) {
             u.drawImage();
             f()
         },
-        m = function (a, b) {
+        m = function(a, b) {
             var c = E.length;
             return !(0 > a || 0 > b || a >= c || b >= c) && E[a][b]
         },
-        H = function (a, b, c) {
+        H = function(a, b, c) {
             var d = 0;
             return 2 <= a && 5 > a && 2 <= b && 5 > b ? d = 1 : 7 > a && 7 > b ? d = 1 : a >= c - 5 && a < c - 2 && 2 <= b & 5 > b ? d = 1 : a >= c - 7 && a < c && 0 <= b & 7 > b ? d = 1 : 2 <= a && 5 > a && b >= c - 5 & b < c - 2 ? d = 1 : 0 <= a && 7 > a && b >= c - 7 & b < c && (d = 1),
                 d
         },
-        T = function (f) {
+        T = function(f) {
             f.save();
             f.clip();
             var b = a.foreground.width,
@@ -665,7 +665,7 @@ function createQRImage(P, Q, X) {
                         f.drawImage(a.foreground, d, e, b, c);
             f.restore()
         },
-        I = function (f, b, c, h) {
+        I = function(f, b, c, h) {
             var e = 0,
                 g = 0;
             switch (h) {
@@ -690,7 +690,7 @@ function createQRImage(P, Q, X) {
                         f.lineTo(e, g)
             }
         },
-        A = function (f, b, c, h) {
+        A = function(f, b, c, h) {
             var e = 0,
                 g = 0;
             switch (h) {
@@ -715,14 +715,14 @@ function createQRImage(P, Q, X) {
                         f.arc(e, g, a.round, Math.PI / 2, Math.PI, !1)
             }
         },
-        J = function (f, b, c, h, e) {
+        J = function(f, b, c, h, e) {
             var g, k;
             a.width / 2;
             switch (f.beginPath(),
-            null != a.gcColor && (e = K),
-            f.fillStyle = e,
-            f.strokeStyle = e,
-            h) {
+                null != a.gcColor && (e = K),
+                f.fillStyle = e,
+                f.strokeStyle = e,
+                h) {
                 case 0:
                     g = b * d + a.round + a.margin;
                     k = c * d + a.round + a.margin;
@@ -756,10 +756,10 @@ function createQRImage(P, Q, X) {
             null != a.foreground ? T(f) : (f.fill(),
                 f.stroke())
         },
-        N = function (f, b, c) {
+        N = function(f, b, c) {
             var grd = "";
             switch (grd = "",
-            a.gradientWay) {
+                a.gradientWay) {
                 case "backslash":
                     grd = f.createRadialGradient(0, 0, 0, c, c, a.width);
                     break;
@@ -779,15 +779,15 @@ function createQRImage(P, Q, X) {
                     grd = a.fgColor
             }
             return 0 != a.gradientWay && (grd.addColorStop(0, b),
-                grd.addColorStop(1, a.gcColor)),
+                    grd.addColorStop(1, a.gcColor)),
                 grd
         },
-        S = function (f, b, c) {
+        S = function(f, b, c) {
             var d = a.inptColor ? a.inptColor : a.fgColor,
                 e = a.ptColor ? a.ptColor : a.fgColor;
             return 2 <= f && 5 > f && 2 <= b && 5 > b ? d : 7 > f && 7 > b ? e : f >= c - 5 && f < c - 2 && 2 <= b & 5 > b ? d : f >= c - 7 && f < c && 0 <= b & 7 > b ? e : 2 <= f && 5 > f && b >= c - 5 & b < c - 2 ? d : 0 <= f && 7 > f && b >= c - 7 & b < c ? e : a.fgColor
         },
-        M = function (f, b, c) {
+        M = function(f, b, c) {
             var h = Math.round(9 * d);
             if (null != a.gcColor && !a.ptColor && !a.inptColor) {
                 f.save();
@@ -806,7 +806,7 @@ function createQRImage(P, Q, X) {
             f.globalCompositeOperation = "source-over";
             f.restore()
         },
-        U = function (a, b, c, d, e, g, k) {
+        U = function(a, b, c, d, e, g, k) {
             a.beginPath();
             a.arc(d + g - c, e + c, c, 0, 1.5 * Math.PI, !0);
             a.lineTo(d + c, e);

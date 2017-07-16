@@ -8,7 +8,6 @@ var APP_PATH = path.resolve(__dirname, '../dist/dev');
 var PRO_PATH = path.resolve(__dirname, '../');
 
 var config = Object.assign({}, baseconfig, {
-    devtool: 'source-map',
     output: {
         path: APP_PATH,
         publicPath: './',

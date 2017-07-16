@@ -10,6 +10,7 @@ var include = [
 module.exports = {
     cache: true,
     target: 'electron',
+    devtool: 'source-map',
     entry: {
         app: path.resolve(__dirname, '../render/src/index.js'),
         vendor: ['vue', 'vuex', 'vue-router']
@@ -27,10 +28,14 @@ module.exports = {
             //     loader: "exports?QRCode&QRErrorCorrectLevel"
             // },
             {
-                test: /\.vue$/, loader: 'vue-loader', include: include
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                include: include
             },
             {
-                test: /\.js$/, loader: 'babel-loader', include: include
+                test: /\.js$/,
+                loader: 'babel-loader',
+                include: include
             },
             {
                 test: /\.css$/,
