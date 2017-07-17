@@ -20,8 +20,8 @@
             <a href="javascript:;" @click="select(2)" :class="{showactive:collapseall}">信息</a>
             <collapse-transition>
                 <ul class="submenu" v-show="collapseall || curindex==2">
-                    <li class="menu-item"><a href="javascript:;"><i class="fa fa-rss-square fa-fw"></i> RSS</a></li>
-                    <li class="menu-item"><a href="javascript:;"><i class="fa fa-envelope fa-fw"></i> 邮箱</a></li>
+                    <li class="menu-item"><a href="javascript:;" @click="section('RssRead')"><i class="fa fa-rss-square fa-fw"></i> RSS</a></li>
+                    <li class="menu-item"><a href="javascript:;" @click="section('QR')"><i class="fa fa-envelope fa-fw"></i> 邮箱</a></li>
                 </ul>
             </collapse-transition>
         </li>

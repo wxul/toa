@@ -105,7 +105,7 @@
                             <el-switch v-model="WIFI.H" on-text="是" off-text="否" on-color="#13ce66" off-color="#ff4949">
                             </el-switch>
                         </el-form-item>
-    
+
                     </el-form>
                 </div>
                 <div class="ctx-item" :key="6" v-if="cur_tab=='sms'">
@@ -204,372 +204,373 @@
     </div>
 </template>
 <script>
-import createQRImage from '@utils/qrcanvas';
-import cp from '@components/colorpicker';
+    import createQRImage from '@utils/qrcanvas';
+    import cp from '@components/colorpicker';
 
-export default {
-    components: {
-        ColorPicker: cp
-    },
-    data() {
-        return {
-            cur_tab: 'txt',
-            form: {},
-            activeName: '',
-            canvas: null,
-            txt: '',
-            url: '',
-            select: '1',
-            tel: '',
-            email: '',
-            MECARD: {
-                N: '',      // 姓名
-                ADR: '',    // 地址
-                TEL: '',    // 电话
-                EMAIL: '',  // 邮箱
-                URL: '',    // 网址
-                QQ: '',     // QQ
-                TIL: '',    // 职位
-                ORG: '',    // 单位
-                NOTE: ''    // 备注
-            },
-            WIFI: {
-                S: '',      // SSID
-                P: '',      // Password
-                T: 'WPA',   // type,WEP/WPA/nopass
-                H: false    // 是否隐藏
-            },
-            Toptions: [{
-                value: 'nopass',
-                label: '无加密'
-            }, {
-                value: 'WEP',
-                label: 'WEP'
-            }, {
-                value: 'WPA',
-                label: 'WPA/WPA2'
-            }],
-            SMS: {
-                Tel: '',
-                NOTE: ''
-            },
-            dl: {
-                base64: '',
-                name: '二维码.png'
-            },
-            other: {
-                round: 0,
-                fgcolor: '#000',
-                bgcolor: '#fff',
-                ptcolor: '#000',
-                inptcolor: '#000',
-                gccolor: '#000',
-                gctype: 'circular',
-                gctypes: [{
-                    label: '无',
-                    value: '0'
+    export default {
+        components: {
+            ColorPicker: cp
+        },
+        data() {
+            return {
+                cur_tab: 'txt',
+                form: {},
+                activeName: '',
+                canvas: null,
+                txt: '',
+                url: '',
+                select: '1',
+                tel: '',
+                email: '',
+                MECARD: {
+                    N: '',      // 姓名
+                    ADR: '',    // 地址
+                    TEL: '',    // 电话
+                    EMAIL: '',  // 邮箱
+                    URL: '',    // 网址
+                    QQ: '',     // QQ
+                    TIL: '',    // 职位
+                    ORG: '',    // 单位
+                    NOTE: ''    // 备注
+                },
+                WIFI: {
+                    S: '',      // SSID
+                    P: '',      // Password
+                    T: 'WPA',   // type,WEP/WPA/nopass
+                    H: false    // 是否隐藏
+                },
+                Toptions: [{
+                    value: 'nopass',
+                    label: '无加密'
                 }, {
-                    label: '反斜线',
-                    value: 'backslash'
+                    value: 'WEP',
+                    label: 'WEP'
                 }, {
-                    label: '斜线',
-                    value: 'slash'
-                }, {
-                    label: '圆形',
-                    value: 'circular'
-                }, {
-                    label: '水平',
-                    value: 'horizontal'
-                }, {
-                    label: '垂直',
-                    value: 'vertical'
+                    value: 'WPA',
+                    label: 'WPA/WPA2'
                 }],
-                margin: 10,
-                margins: [{
-                    label: '0',
-                    value: 0
-                }, {
-                    label: '10px',
-                    value: 10
-                }, {
-                    label: '20px',
-                    value: 20
-                }, {
-                    label: '25px',
-                    value: 25
-                }],
-                level: 'L',
-                levellock: false,
-                levels: [{
-                    label: '最低',
-                    value: 'L'
-                }, {
-                    label: '低',
-                    value: 'M'
-                }, {
-                    label: '中',
-                    value: 'Q'
-                }, {
-                    label: '高',
-                    value: 'H'
-                }],
-                rotate: '0',
-                rotates: [{
-                    label: '0',
-                    value: '0'
-                }, {
-                    label: '90°',
-                    value: '1'
-                }, {
-                    label: '180°',
-                    value: '2'
-                }, {
-                    label: '270°',
-                    value: '3'
-                }],
-                logo: {
+                SMS: {
+                    Tel: '',
+                    NOTE: ''
+                },
+                dl: {
+                    base64: '',
+                    name: '二维码.png'
+                },
+                other: {
+                    round: 0,
+                    fgcolor: '#000',
+                    bgcolor: '#fff',
+                    ptcolor: '#000',
+                    inptcolor: '#000',
+                    gccolor: '#000',
+                    gctype: 'circular',
+                    gctypes: [{
+                        label: '无',
+                        value: '0'
+                    }, {
+                        label: '反斜线',
+                        value: 'backslash'
+                    }, {
+                        label: '斜线',
+                        value: 'slash'
+                    }, {
+                        label: '圆形',
+                        value: 'circular'
+                    }, {
+                        label: '水平',
+                        value: 'horizontal'
+                    }, {
+                        label: '垂直',
+                        value: 'vertical'
+                    }],
+                    margin: 10,
+                    margins: [{
+                        label: '0',
+                        value: 0
+                    }, {
+                        label: '10px',
+                        value: 10
+                    }, {
+                        label: '20px',
+                        value: 20
+                    }, {
+                        label: '25px',
+                        value: 25
+                    }],
+                    level: 'L',
+                    levellock: false,
+                    levels: [{
+                        label: '最低',
+                        value: 'L'
+                    }, {
+                        label: '低',
+                        value: 'M'
+                    }, {
+                        label: '中',
+                        value: 'Q'
+                    }, {
+                        label: '高',
+                        value: 'H'
+                    }],
+                    rotate: '0',
+                    rotates: [{
+                        label: '0',
+                        value: '0'
+                    }, {
+                        label: '90°',
+                        value: '1'
+                    }, {
+                        label: '180°',
+                        value: '2'
+                    }, {
+                        label: '270°',
+                        value: '3'
+                    }],
+                    logo: {
+                        logoimg: '',
+                        logotype: ''
+                    },
+                    logotype: 'default',
+                    logotypes: [{
+                        label: '圆角',
+                        value: 'icon'
+                    }, {
+                        label: '白底',
+                        value: 'border'
+                    }, {
+                        label: '描边',
+                        value: 'stroke'
+                    }, {
+                        label: '原图',
+                        value: 'default'
+                    }]
+                }
+            }
+        },
+        computed: {
+            mecard() {
+                return this.formatter('MECARD');
+            },
+            wifi() {
+                return this.formatter('WIFI');
+            },
+            sms() {
+                return `smsto:${this.SMS.Tel}:${this.SMS.NOTE}`
+            }
+        },
+        watch: {
+            'other.round': function (v, old) {
+                this.canvas.changeRound(v < 0, Math.abs(v) / 100);
+            },
+            'other.fgcolor': function (v, old) {
+                this.canvas.changeFgColor(v);
+            },
+            'other.bgcolor': function (v, old) {
+                this.canvas.changeBgColor(v);
+            },
+            'other.ptcolor': function (v, old) {
+                this.canvas.changePtColor(v);
+            },
+            'other.inptcolor': function (v, old) {
+                this.canvas.changeInPtColor(v);
+            },
+            'other.gccolor': function (v, old) {
+                this.canvas.changeGcColor(this.other.gctype, v);
+            },
+            'other.width': function (v, old) {
+                this.canvas.changeWidth(v);
+            },
+            'other.rotate': function (v, old) {
+                this.canvas.changeRotate(v);
+            },
+            'other.level': function (v, old) {
+                this.canvas.changeLevel(v);
+            },
+            'other.margin': function (v, old) {
+                this.canvas.changeMargin(v);
+            },
+            'other.gctype': function (v, old) {
+                this.canvas.changeGradientWay(v, this.other.gccolor);
+            }
+        },
+        mounted() {
+            this.canvas = new createQRImage('canvas');
+            // console.log(this.canvas);
+            this.canvas.changeText('https://albert.amayading.com');
+        },
+        methods: {
+            tab(i) {
+                this.cur_tab = i;
+            },
+            setH() {
+                this.other.level = 'H';
+                this.other.levellock = true;
+            },
+            onLogoTypeChange(e) {
+                if (!this.other.logo.logoimg) return;
+                this.canvas.changeLogoimg(this.other.logo.logoimg, e);
+                this.setH();
+            },
+            logoselect(e) {
+                this.other.logo.logoimg = e;
+                this.canvas.changeLogoimg(e, this.other.logotype);
+                this.setH();
+            },
+            handleLogo() {
+                this.$refs.logo.click();
+            },
+            wifichange(e) {
+                if (e == 'nopass') {
+                    this.WIFI.P = '';
+                }
+            },
+            formatter(objName) {
+                var obj = this[objName];
+                var tmp = '';
+                Object.keys(obj).forEach((e, i) => {
+                    var val = obj[e];
+                    if (!!val) {
+                        tmp += `${e}:${val};`;
+                    }
+                })
+                return `${objName}:${tmp};`;
+            },
+            handleDraw() {
+                switch (this.cur_tab) {
+                    case 'txt':
+                        this.canvas.changeText(this.txt);
+                        break;
+                    case 'site':
+                        this.canvas.changeText((this.select == 1 ? 'http://' : 'https://') + this.url);
+                        break;
+                    case 'tel':
+                        this.canvas.changeText(`tel:${this.tel}`);
+                        break;
+                    case 'email':
+                        this.canvas.changeText(`mailto:${this.email}`);
+                        break;
+                    case 'card':
+                        this.canvas.changeText(this.mecard);
+                        break;
+                    case 'wifi':
+                        this.canvas.changeText(this.wifi);
+                        break;
+                    case 'sms':
+                        this.canvas.changeText(this.sms);
+                        break;
+                    case 'effect': //清除设置
+                        this.canvas.resetAll();
+                        this.resetAll();
+                        break;
+                    default:
+                        break;
+                }
+            },
+            resetAll() {
+                this.other.round = 0;
+                this.other.fgcolor = '#000';
+                this.other.bgcolor = '#fff';
+                this.other.ptcolor = '#000';
+                this.other.inptcolor = '#000';
+                this.other.gccolor = '#000';
+                this.other.gctype = 'circular';
+                this.other.margin = 10;
+                this.other.level = 'L';
+                this.other.levellock = false;
+                this.other.rotate = '0';
+                this.other.logo = {
                     logoimg: '',
                     logotype: ''
-                },
-                logotype: 'default',
-                logotypes: [{
-                    label: '圆角',
-                    value: 'icon'
-                }, {
-                    label: '白底',
-                    value: 'border'
-                }, {
-                    label: '描边',
-                    value: 'stroke'
-                }, {
-                    label: '原图',
-                    value: 'default'
-                }]
-            }
-        }
-    },
-    computed: {
-        mecard() {
-            return this.formatter('MECARD');
-        },
-        wifi() {
-            return this.formatter('WIFI');
-        },
-        sms() {
-            return `smsto:${this.SMS.Tel}:${this.SMS.NOTE}`
-        }
-    },
-    watch: {
-        'other.round': function (v, old) {
-            this.canvas.changeRound(v < 0, Math.abs(v) / 100);
-        },
-        'other.fgcolor': function (v, old) {
-            this.canvas.changeFgColor(v);
-        },
-        'other.bgcolor': function (v, old) {
-            this.canvas.changeBgColor(v);
-        },
-        'other.ptcolor': function (v, old) {
-            this.canvas.changePtColor(v);
-        },
-        'other.inptcolor': function (v, old) {
-            this.canvas.changeInPtColor(v);
-        },
-        'other.gccolor': function (v, old) {
-            this.canvas.changeGcColor(this.other.gctype, v);
-        },
-        'other.width': function (v, old) {
-            this.canvas.changeWidth(v);
-        },
-        'other.rotate': function (v, old) {
-            this.canvas.changeRotate(v);
-        },
-        'other.level': function (v, old) {
-            this.canvas.changeLevel(v);
-        },
-        'other.margin': function (v, old) {
-            this.canvas.changeMargin(v);
-        },
-        'other.gctype': function (v, old) {
-            this.canvas.changeGradientWay(v, this.other.gccolor);
-        }
-    },
-    mounted() {
-        this.canvas = new createQRImage('canvas');
-        // console.log(this.canvas);
-        this.canvas.changeText('https://albert.amayading.com');
-    },
-    methods: {
-        tab(i) {
-            this.cur_tab = i;
-        },
-        setH() {
-            this.other.level = 'H';
-            this.other.levellock = true;
-        },
-        onLogoTypeChange(e) {
-            if (!this.other.logo.logoimg) return;
-            this.canvas.changeLogoimg(this.other.logo.logoimg, e);
-            this.setH();
-        },
-        logoselect(e) {
-            this.other.logo.logoimg = e;
-            this.canvas.changeLogoimg(e, this.other.logotype);
-            this.setH();
-        },
-        handleLogo() {
-            this.$refs.logo.click();
-        },
-        wifichange(e) {
-            if (e == 'nopass') {
-                this.WIFI.P = '';
-            }
-        },
-        formatter(objName) {
-            var obj = this[objName];
-            var tmp = '';
-            Object.keys(obj).forEach((e, i) => {
-                var val = obj[e];
-                if (!!val) {
-                    tmp += `${e}:${val};`;
                 }
-            })
-            return `${objName}:${tmp};`;
-        },
-        handleDraw() {
-            switch (this.cur_tab) {
-                case 'txt':
-                    this.canvas.changeText(this.txt);
-                    break;
-                case 'site':
-                    this.canvas.changeText((this.select == 1 ? 'http://' : 'https://') + this.url);
-                    break;
-                case 'tel':
-                    this.canvas.changeText(`tel:${this.tel}`);
-                    break;
-                case 'email':
-                    this.canvas.changeText(`mailto:${this.email}`);
-                    break;
-                case 'card':
-                    this.canvas.changeText(this.mecard);
-                    break;
-                case 'wifi':
-                    this.canvas.changeText(this.wifi);
-                    break;
-                case 'sms':
-                    this.canvas.changeText(this.sms);
-                    break;
-                case 'effect': //清除设置
-                    this.canvas.resetAll();
-                    this.resetAll();
-                    break;
-                default:
-                    break;
+            },
+            handleClick() {
+                //console.log(createQRImage);
+            },
+            handleSave() {
+                this.dl.base64 = document.getElementById('canvas').toDataURL('image/png');
+                this.$nextTick(function () {
+                    this.$refs.btna.click();
+                })
             }
-        },
-        resetAll() {
-            this.other.round = 0;
-            this.other.fgcolor = '#000';
-            this.other.bgcolor = '#fff';
-            this.other.ptcolor = '#000';
-            this.other.inptcolor = '#000';
-            this.other.gccolor = '#000';
-            this.other.gctype = 'circular';
-            this.other.margin = 10;
-            this.other.level = 'L';
-            this.other.levellock = false;
-            this.other.rotate = '0';
-            this.other.logo = {
-                logoimg: '',
-                logotype: ''
-            }
-        },
-        handleClick() {
-            //console.log(createQRImage);
-        },
-        handleSave() {
-            this.dl.base64 = document.getElementById('canvas').toDataURL('image/png');
-            this.$nextTick(function () {
-                this.$refs.btna.click();
-            })
         }
-    }
-};
+    };
+
 </script>
 <style lang="less">
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .2s;
-}
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity .2s;
+    }
 
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
 
-.qrcode {
-    display: flex;
-    min-height: 100%;
-    height: 100%;
-    .draw.el-button {
-        margin-top: 20px;
-        float: right;
-    }
-    .el-form-item__label {
-        color: #ccc;
-    }
-    .tab-url .el-select .el-input {
-        width: 90px;
-    }
-    .tab-card .el-form .el-form-item,
-    .tab-wifi .el-form .el-form-item,
-    .tab-sms .el-form .el-form-item,
-    .tab-other .el-form .el-form-item {
-        margin-bottom: 10px;
-    }
-    .inline {
-        display: inline-block;
-        margin-right: 10px;
-    }
-    #canvas {
-        box-shadow: 0 0 4px #333;
-        max-width: 100%;
-    }
-    .nav {
-        background-color: transparent;
-        width: 90px;
-        padding-top: 50px;
-        .menu .menu-item a {
-            line-height: 40px;
-        }
-    }
-    .ctx-items {
+    .qrcode {
         display: flex;
-        width: 400px;
-        flex-direction: column;
-        padding: 15px;
-        .ctx-item {
-            box-sizing: border-box;
-            width: 100%;
+        min-height: 100%;
+        height: 100%;
+        .draw.el-button {
+            margin-top: 20px;
+            float: right;
         }
-        .draw {
-            float: none;
+        .el-form-item__label {
+            color: #999;
+        }
+        .tab-url .el-select .el-input {
+            width: 90px;
+        }
+        .tab-card .el-form .el-form-item,
+        .tab-wifi .el-form .el-form-item,
+        .tab-sms .el-form .el-form-item,
+        .tab-other .el-form .el-form-item {
+            margin-bottom: 10px;
+        }
+        .inline {
             display: inline-block;
+            margin-right: 10px;
         }
-    }
-    .resultimg {
-        flex: 1;
-        padding: 15px;
-        padding-left: 0;
-        .cc {
-            width: 100%;
-            max-width: 500px;
-            box-sizing: border-box;
-
-            canvas {
+        #canvas {
+            box-shadow: 0 0 4px #333;
+            max-width: 100%;
+        }
+        .nav {
+            background-color: transparent;
+            width: 90px;
+            padding-top: 50px;
+            .menu .menu-item a {
+                line-height: 40px;
+            }
+        }
+        .ctx-items {
+            display: flex;
+            width: 400px;
+            flex-direction: column;
+            padding: 15px;
+            .ctx-item {
+                box-sizing: border-box;
                 width: 100%;
+            }
+            .draw {
+                float: none;
+                display: inline-block;
+            }
+        }
+        .resultimg {
+            flex: 1;
+            padding: 15px;
+            padding-left: 0;
+            .cc {
+                width: 100%;
+                max-width: 500px;
+                box-sizing: border-box;
+
+                canvas {
+                    width: 100%;
+                }
             }
         }
     }
-}
 </style>

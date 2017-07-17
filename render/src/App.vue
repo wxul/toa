@@ -23,63 +23,65 @@
     </div>
 </template>
 <script>
-import '@assets/normalize.css';
-import '@assets/global.css'
-import '@assets/font-awesome/less/font-awesome.less';
-import NavMenu from '@components/nav';
-import Index from '@page/index.vue';
-import QR from '@page/qr/qr.vue';
-import QRDecode from '@page/qr/decode.vue';
+    import '@assets/normalize.css';
+    import '@assets/global.css'
+    import '@assets/font-awesome/less/font-awesome.less';
+    import NavMenu from '@components/nav';
+    import Index from '@page/index.vue';
+    import QR from '@page/qr/qr.vue';
+    import QRDecode from '@page/qr/decode.vue';
+    import RssRead from '@page/rss/read';
 
-const electron = require("electron");
-const ipc = electron.ipcRenderer;
+    const electron = require("electron");
+    const ipc = electron.ipcRenderer;
 
-export default {
-    components: {
-        NavMenu: NavMenu,
-        Index: Index,
-        QR: QR,
-        QRDecode: QRDecode
-    },
-    data() {
-        return {
-            view: 'QRDecode'
-        };
-    },
-    created() {
-        ipc.on('print-screen-pressed', (e) => {
-            console.log('123:', e);
-            this.view = 'QRDecode';
-        })
-    },
-    mounted() {
-        this.view = 'Index';
-    },
-    methods: {
-        section(i) {
-            this.view = i;
+    export default {
+        components: {
+            NavMenu: NavMenu,
+            Index: Index,
+            QR: QR,
+            QRDecode: QRDecode,
+            RssRead: RssRead
+        },
+        data() {
+            return {
+                view: 'QRDecode'
+            };
+        },
+        created() {
+            ipc.on('print-screen-pressed', (e) => {
+                console.log('123:', e);
+                this.view = 'QRDecode';
+            })
+        },
+        mounted() {
+            this.view = 'Index';
+        },
+        methods: {
+            section(i) {
+                this.view = i;
+            }
         }
-    }
-};
+    };
 
 </script>
 <style lang="less">
-.fade-enter-active,
-.fade-leave-active {
-    transition: all .18s;
-}
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all .18s;
+    }
 
-.fade-enter,
-.fade-leave-active {
-    opacity: 0;
-    transform: translate3d(-10px, 0, 0);
-    visibility: hidden;
-}
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0;
+        transform: translate3d(-10px, 0, 0);
+        visibility: hidden;
+    }
 
-.main {
-    // padding: 10px;
-    position: relative;
-}
+    .main {
+        // padding: 10px;
+        position: relative;
+    }
 
-@import './app.less';
+    @import './app.less';
 </style>
