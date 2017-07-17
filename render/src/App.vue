@@ -26,6 +26,7 @@
     import '@assets/normalize.css';
     import '@assets/global.css'
     import '@assets/font-awesome/less/font-awesome.less';
+    import linksex from '@utils/openexlink.js';
     import NavMenu from '@components/nav';
     import Index from '@page/index.vue';
     import QR from '@page/qr/qr.vue';
@@ -50,11 +51,11 @@
         },
         created() {
             ipc.on('print-screen-pressed', (e) => {
-                console.log('123:', e);
                 this.view = 'QRDecode';
             })
         },
         mounted() {
+            linksex.linksinit();
             this.view = 'Index';
         },
         methods: {

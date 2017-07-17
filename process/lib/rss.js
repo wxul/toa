@@ -9,6 +9,5 @@ const RSSPath = path.resolve(__dirname, '../data/rss.json');
 // 获取rss列表
 ipc.on('rss-getlist', (e) => {
     var result = JSON.parse(fs.readFileSync(RSSPath));
-    e.returnValue = result;
+    e.sender.send('rss-readed', result);
 });
-

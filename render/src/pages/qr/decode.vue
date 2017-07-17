@@ -5,7 +5,8 @@
                 <el-form label-width="80px">
                     <el-form-item label="图片">
                         <div class="upload2">
-                            <el-uploadd action="/test.com" type="drag" :thumbnail-mode="true" :before-upload="uploadhandle" :on-preview="handlePreview" :default-file-list="fileList">
+                            <el-uploadd action="/test.com" type="drag" :thumbnail-mode="true" :before-upload="uploadhandle" :on-preview="handlePreview"
+                                :default-file-list="fileList">
                                 <i class="el-icon-upload"></i>
                                 <div class="el-dragger__text">将文件拖到此处，或
                                     <em>点击添加</em>
@@ -29,120 +30,119 @@
     </div>
 </template>
 <script>
-var qrcode = require('exports-loader?qrcode!@utils/llqrcode.js');
-// import t from '@utils/llqrcode.js';
-const electron = require('electron');
-const ipc = electron.ipcRenderer;
-const desktopCapturer = electron.desktopCapturer;
-const electronScreen = electron.screen;
-export default {
-    data() {
-        return {
-            decodetext: '',
-            imgurl: '',
-            fileList: [],
-            imgdata: '',
-            dialogVisible: false,
-            screen: false
-        }
-    },
-    created() {
-        // 回调中获取解码结果
-        qrcode.callback = (result) => {
-            this.decodetext = result;
-            if (this.screen && result !== 'error decoding QR Code') {
-                this.screen = false;
-                ipc.send('qr-screen-success');
-            }
-        };
-
-        // 监听截图事件解码
-        ipc.on('print-screen-pressed', e => {
-            this.screen = true;
-            var thumbSize = this.determineScreenShotSize();
-            var options = {
-                types: ['screen'],
-                thumbnailSize: thumbSize
-            };
-            desktopCapturer.getSources(options, (err, sources) => {
-                if (err) return console.log(err);
-                sources.forEach((s) => {
-                    if (s.name === 'Entire screen' || s.name === 'Screen 1') {
-                        var base64 = s.thumbnail.toDataURL();
-
-                        this.fileList = [{
-                            name: 'screenshot',
-                            url: base64
-                        }];
-                        qrcode.decode(base64);
-                    }
-                })
-            });
-        });
-    },
-    methods: {
-        determineScreenShotSize() {
-            const screenSize = electronScreen.getPrimaryDisplay().workAreaSize;
-            const maxDimension = Math.max(screenSize.width, screenSize.height);
-            // console.log(electronScreen.getPrimaryDisplay(), window.devicePixelRatio);
+    var qrcode = require('exports-loader?qrcode!@utils/llqrcode.js');
+    // import t from '@utils/llqrcode.js';
+    const electron = require('electron');
+    const ipc = electron.ipcRenderer;
+    const desktopCapturer = electron.desktopCapturer;
+    const electronScreen = electron.screen;
+    export default {
+        data() {
             return {
-                width: Number.parseInt(maxDimension * window.devicePixelRatio),
-                height: Number.parseInt(maxDimension * window.devicePixelRatio)
+                decodetext: '',
+                imgurl: '',
+                fileList: [],
+                imgdata: '',
+                dialogVisible: false,
+                screen: false
             }
         },
-        decodeImg(filename, result) {
-            this.imgdata = result;
-            this.fileList = [{
-                name: filename,
-                url: result
-            }];
-            qrcode.decode(result);
-        },
-        uploadhandle(file) {
-            var reader = new FileReader();
-            reader.onload = (e) => {
-                this.decodeImg(file.name, e.target.result);
-            }
-            reader.readAsDataURL(file);
-            return false;
-        },
-        handlePreview(file) {
-            this.LoadImage(file.url).then((img) => {
-                ipc.send("show-img-window", {
-                    url: file.url,
-                    name: file.name,
-                    width: img.width,
-                    height: img.height
+        created() {
+            // 回调中获取解码结果
+            qrcode.callback = (result) => {
+                this.decodetext = result;
+                if (this.screen && result !== 'error decoding QR Code') {
+                    this.screen = false;
+                    ipc.send('qr-screen-success');
+                }
+            };
+
+            // 监听截图事件解码
+            ipc.on('print-screen-pressed', e => {
+                this.screen = true;
+                var thumbSize = this.determineScreenShotSize();
+                var options = {
+                    types: ['screen'],
+                    thumbnailSize: thumbSize
+                };
+                desktopCapturer.getSources(options, (err, sources) => {
+                    if (err) return console.log(err);
+                    sources.forEach((s) => {
+                        if (s.name === 'Entire screen' || s.name === 'Screen 1') {
+                            var base64 = s.thumbnail.toDataURL();
+
+                            this.fileList = [{
+                                name: 'screenshot',
+                                url: base64
+                            }];
+                            qrcode.decode(base64);
+                        }
+                    })
                 });
             });
         },
-        LoadImage(imgSrc) {
-            return new Promise((resolve, reject) => {
-                var image = new Image();
-                image.src = imgSrc;
-                if (image.complete) {
-                    resolve(image);
-                    image.onload = function () { };
-                } else {
-                    image.onload = function () {
-                        resolve(image);
-                        // clear onLoad, IE behaves erratically with animated gifs otherwise
-                        image.onload = function () { };
-                    }
-                    image.onerror = function (e) {
-                        log('Could not load image.');
-                        reject(e);
-                    }
+        methods: {
+            determineScreenShotSize() {
+                const screenSize = electronScreen.getPrimaryDisplay().workAreaSize;
+                const maxDimension = Math.max(screenSize.width, screenSize.height);
+                // console.log(electronScreen.getPrimaryDisplay(), window.devicePixelRatio);
+                return {
+                    width: Number.parseInt(maxDimension * window.devicePixelRatio),
+                    height: Number.parseInt(maxDimension * window.devicePixelRatio)
                 }
-            });
+            },
+            decodeImg(filename, result) {
+                this.imgdata = result;
+                this.fileList = [{
+                    name: filename,
+                    url: result
+                }];
+                qrcode.decode(result);
+            },
+            uploadhandle(file) {
+                var reader = new FileReader();
+                reader.onload = (e) => {
+                    this.decodeImg(file.name, e.target.result);
+                }
+                reader.readAsDataURL(file);
+                return false;
+            },
+            handlePreview(file) {
+                this.LoadImage(file.url).then((img) => {
+                    ipc.send("show-img-window", {
+                        url: file.url,
+                        name: file.name,
+                        width: img.width,
+                        height: img.height
+                    });
+                });
+            },
+            LoadImage(imgSrc) {
+                return new Promise((resolve, reject) => {
+                    var image = new Image();
+                    image.src = imgSrc;
+                    if (image.complete) {
+                        resolve(image);
+                        image.onload = function () {};
+                    } else {
+                        image.onload = function () {
+                            resolve(image);
+                            // clear onLoad, IE behaves erratically with animated gifs otherwise
+                            image.onload = function () {};
+                        }
+                        image.onerror = function (e) {
+                            log('Could not load image.');
+                            reject(e);
+                        }
+                    }
+                });
 
-        },
-    }
-};
-
+            },
+        }
+    };
 </script>
 <style>
-.qrdecode {
-    padding: 20px;
-}
+    .qrdecode {
+        padding: 20px;
+    }
 </style>
