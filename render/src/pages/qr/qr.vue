@@ -223,21 +223,21 @@
                 tel: '',
                 email: '',
                 MECARD: {
-                    N: '',      // 姓名
-                    ADR: '',    // 地址
-                    TEL: '',    // 电话
-                    EMAIL: '',  // 邮箱
-                    URL: '',    // 网址
-                    QQ: '',     // QQ
-                    TIL: '',    // 职位
-                    ORG: '',    // 单位
-                    NOTE: ''    // 备注
+                    N: '', // 姓名
+                    ADR: '', // 地址
+                    TEL: '', // 电话
+                    EMAIL: '', // 邮箱
+                    URL: '', // 网址
+                    QQ: '', // QQ
+                    TIL: '', // 职位
+                    ORG: '', // 单位
+                    NOTE: '' // 备注
                 },
                 WIFI: {
-                    S: '',      // SSID
-                    P: '',      // Password
-                    T: 'WPA',   // type,WEP/WPA/nopass
-                    H: false    // 是否隐藏
+                    S: '', // SSID
+                    P: '', // Password
+                    T: 'WPA', // type,WEP/WPA/nopass
+                    H: false // 是否隐藏
                 },
                 Toptions: [{
                     value: 'nopass',
@@ -495,82 +495,7 @@
             }
         }
     };
-
 </script>
 <style lang="less">
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity .2s;
-    }
-
-    .fade-enter,
-    .fade-leave-to {
-        opacity: 0;
-    }
-
-    .qrcode {
-        display: flex;
-        min-height: 100%;
-        height: 100%;
-        .draw.el-button {
-            margin-top: 20px;
-            float: right;
-        }
-        .el-form-item__label {
-            color: #999;
-        }
-        .tab-url .el-select .el-input {
-            width: 90px;
-        }
-        .tab-card .el-form .el-form-item,
-        .tab-wifi .el-form .el-form-item,
-        .tab-sms .el-form .el-form-item,
-        .tab-other .el-form .el-form-item {
-            margin-bottom: 10px;
-        }
-        .inline {
-            display: inline-block;
-            margin-right: 10px;
-        }
-        #canvas {
-            box-shadow: 0 0 4px #333;
-            max-width: 100%;
-        }
-        .nav {
-            background-color: transparent;
-            width: 90px;
-            padding-top: 50px;
-            .menu .menu-item a {
-                line-height: 40px;
-            }
-        }
-        .ctx-items {
-            display: flex;
-            width: 400px;
-            flex-direction: column;
-            padding: 15px;
-            .ctx-item {
-                box-sizing: border-box;
-                width: 100%;
-            }
-            .draw {
-                float: none;
-                display: inline-block;
-            }
-        }
-        .resultimg {
-            flex: 1;
-            padding: 15px;
-            padding-left: 0;
-            .cc {
-                width: 100%;
-                max-width: 500px;
-                box-sizing: border-box;
-
-                canvas {
-                    width: 100%;
-                }
-            }
-        }
-    }
+    @import './qr.less';
 </style>

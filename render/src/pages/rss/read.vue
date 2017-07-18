@@ -5,24 +5,27 @@
                 <li class="el-menu-item toolmenu" style="padding-left: 10px;">
                     <span>管理</span>
                     <div class="menus">
-
+                        <span @click="rssdialog.add=true" title="添加RSS源"><i class="fa fa-rss fa-fw"></i></span>
+                        <span @click="rssedit" title="编辑"><i class="fa fa-edit fa-fw"></i></span>
+                        <span @click="rssreload" title="刷新"><i class="fa fa-refresh fa-fw"></i></span>
+                        <span @click="rssdel" title="删除当前"><i class="fa fa-trash fa-fw"></i></span>
                     </div>
                 </li>
-                <el-submenu :index="f" v-for="(item,f) in warpped_rss" :key="f" v-if="f!='_nonefile_'">
+                <el-submenu :index="f" v-for="(item,f) in wrapped_rss" :key="f" v-if="f!='_nofile_'">
                     <template slot="title"><i class="el-icon-message"></i> {{f}}</template>
                     <el-menu-item :index="r.url" v-for="(r,i) in item" :key="i" :title="r.name" v-text="r.name" :class="{loading:r.pending}"></el-menu-item>
                 </el-submenu>
-                <el-menu-item :index="r.url" v-for="(r,i) in warpped_rss['_nonefile_']" :key="i" :title="r.name" v-text="r.name" :class="{loading:r.pending}"></el-menu-item>
+                <el-menu-item :index="r.url" v-for="(r,i) in wrapped_rss['_nofile_']" :key="i" :title="r.name" v-text="r.name" :class="{loading:r.pending}"></el-menu-item>
             </el-menu>
         </div>
-        <div class="rss-content">
+        <div class="rss-content" ref="rsscontent">
             <transition name="slide">
                 <ul class="el-titles el-menu" v-show="!activeTopic && activeChannel.entries">
-                    <li class="el-menu-item tt">{{activeChannel.title}}<span class="subtt"> - {{activeChannel.description}}</span></li>
+                    <li class="el-menu-item tt txt-ellipsis">{{activeChannel.title}}<span class="subtt"> - {{activeChannel.description}}</span></li>
                     <!-- <li class="el-menu-item updatetime" v-show="activeChannel && activeChannel.entries">更新于:123</li> -->
-                    <li class="el-menu-item" v-for="item in activeChannel.entries" @click="activeTopic=item">
+                    <li class="el-menu-item" :title="item.title" v-for="item in wrapped_entries" @click="activeTopic=item">
                         <time class="uptime">[{{item.pubDate|dateformat}}]</time>
-                        <p v-html="item.title"></p>
+                        <p class="txt-ellipsis" v-html="item.title"></p>
                     </li>
                 </ul>
             </transition>
@@ -32,10 +35,30 @@
                     <p class="title">
                         <a data-openexternal="true" :href="topic.link" v-html="topic.title"></a>
                     </p>
-                    <p v-html="topic.content"></p>
+                    <div v-html="topic.content" class="content"></div>
                 </div>
             </transition>
         </div>
+        <el-dialog title="添加" v-model="rssdialog.add">
+            <el-form :model="addrssform">
+                <el-form-item label="名称" label-width="70px">
+                    <el-input v-model="addrssform.name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="分类" label-width="70px">
+                    <el-select v-model="addrssform.rsscat" filterable allow-create placeholder="请选择或输入分类">
+                        <el-option v-for="item in rss_categories" :label="item.n" :value="item.v">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="RSS源" label-width="70px">
+                    <el-input v-model="addrssform.rsslink" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="rssdialog.add=false">取 消</el-button>
+                <el-button type="primary" @click="handleAddRss">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -85,6 +108,9 @@
                 var cat = {};
                 this.slist.forEach((e, i) => {
                     var f = e.file;
+                    if (!f) {
+                        f = '无';
+                    }
                     if (!(f in cat)) {
                         cat[f] = [];
                         t.push({
@@ -94,19 +120,25 @@
                     }
                     //cat[f].push(e);
                 });
-                t.push({
-                    n: "无",
-                    v: ""
-                });
+                // t.push({
+                //     n: '无',
+                //     v: ''
+                // });
                 return t;
             },
-            warpped_rss() {
+            wrapped_entries() {
+                if (!this.activeChannel.entries || !this.activeChannel.entries instanceof Array) return [];
+                return this.activeChannel.entries.sort((a, b) => {
+                    return (+new Date(b.pubDate)) - (+new Date(a.pubDate));
+                });
+            },
+            wrapped_rss() {
                 if (!this.slist) return [];
                 var cat = {};
                 this.slist.forEach((e, i) => {
                     var f = e.file;
                     if (!f || f == '无') {
-                        f = "_nonefile_";
+                        f = '_nofile_';
                     }
                     if (!(f in cat)) {
                         cat[f] = [];
@@ -120,6 +152,11 @@
                 return this.rsslist;
             }
         },
+        watch: {
+            activeTopic: function (v, old) {
+                this.$refs.rsscontent.scrollTop = 0;
+            }
+        },
         created() {
             ipc.on('rss-readed', (e, o) => {
                 console.log(o);
@@ -131,6 +168,18 @@
             this.loadrss();
         },
         methods: {
+            rssedit() {
+
+            },
+            rssreload() {
+
+            },
+            rssdel() {
+
+            },
+            handleAddRss() {
+
+            },
             loadrss() {
                 ipc.send('rss-getlist');
             },
@@ -178,90 +227,5 @@
     }
 </script>
 <style lang="less">
-    .rssread {
-        height: 100%;
-        display: flex;
-    }
-
-    .rss-menu {
-        display: flex;
-        width: 100px;
-        height: 100%;
-        flex-direction: column;
-        font-size: 12px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        min-width: 140px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        background-color: #eef1f6;
-        .el-menu-item {
-            height: 32px;
-            line-height: 32px;
-            padding: 0 10px !important;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .el-submenu__title {
-            padding-left: 10px !important;
-            padding-right: 10px;
-            height: 32px;
-            line-height: 32px;
-            .el-submenu__icon-arrow {
-                right: 10px;
-            }
-        }
-        .loading {
-            cursor: wait;
-            /* pointer-events: none; */
-        }
-    }
-
-    .rss-content {
-        flex: 1;
-        height: 100%;
-        overflow-y: auto;
-        .el-menu {
-            background-color: #fff;
-            .el-menu-item {
-                line-height: 32px;
-                height: 32px;
-                &.tt {
-                    line-height: 48px;
-                    height: 48px;
-                    color: #000;
-                    font-size: 22px;
-                    cursor: default;
-                    &:hover {
-                        background-color: #fff;
-                    }
-                    .subtt {
-                        font-size: 18px;
-                        color: #999;
-                    }
-                }
-                .uptime {
-                    float: right;
-                }
-            }
-        }
-        .topic {
-            -webkit-user-select: text;
-            padding: 10px;
-            &>p.title {
-                margin: 10px 0;
-                padding-right: 60px;
-                a {
-                    text-decoration: none;
-                    font-size: 22px;
-                    font-weight: 600;
-                    color: #000;
-                    line-height: 28px;
-                    &:hover {
-                        color: #50bfff;
-                    }
-                }
-            }
-        }
-    }
+    @import './rss.less';
 </style>

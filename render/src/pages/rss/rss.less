@@ -1,0 +1,130 @@
+ .rssread {
+     height: 100%;
+     display: flex;
+ }
+
+ .txt-ellipsis {
+     white-space: nowrap;
+     text-overflow: ellipsis;
+     overflow: hidden;
+ }
+
+ .rss-menu {
+     display: flex;
+     width: 100px;
+     height: 100%;
+     flex-direction: column;
+     font-size: 12px;
+     overflow-y: auto;
+     overflow-x: hidden;
+     min-width: 140px;
+     white-space: nowrap;
+     text-overflow: ellipsis;
+     background-color: #eef1f6;
+     .el-menu-item {
+         height: 32px;
+         line-height: 32px;
+         padding: 0 10px !important;
+         overflow: hidden;
+         text-overflow: ellipsis;
+     }
+     .el-submenu__title {
+         padding-left: 10px !important;
+         padding-right: 10px;
+         height: 32px;
+         line-height: 32px;
+         .el-submenu__icon-arrow {
+             right: 10px;
+         }
+     }
+     .loading {
+         cursor: wait;
+         /* pointer-events: none; */
+     }
+     .toolmenu {
+         width: 100%;
+         height: 26px;
+         line-height: 26px;
+         box-sizing: border-box;
+         font-size: 12px;
+         cursor: default;
+         &:hover {
+             background-color: transparent;
+         }
+         .menus {
+             float: right;
+             height: 26px;
+             &>span {
+                 cursor: pointer;
+                 font-size: 14px;
+                 border: 1px solid transparent;
+                 border-radius: 2px;
+                 &:hover {
+                     border-color: #ccc;
+                     background-color: #ccc;
+                 }
+             }
+         }
+     }
+ }
+
+ .rss-content {
+     flex: 1;
+     height: 100%;
+     overflow-y: auto;
+     .el-menu {
+         background-color: #fff;
+         .el-menu-item {
+             line-height: 32px;
+             height: 32px;
+             &:not(.tt) {
+                 display: flex;
+                 flex-direction: row-reverse;
+             }
+             &.tt {
+                 line-height: 48px;
+                 height: 48px;
+                 color: #000;
+                 font-size: 22px;
+                 cursor: default;
+                 &:hover {
+                     background-color: #fff;
+                 }
+                 .subtt {
+                     font-size: 18px;
+                     color: #999;
+                 }
+             }
+             .uptime {
+                 display: block;
+             }
+             &>p {
+                 text-align: left;
+                 flex: 1;
+             }
+         }
+     }
+     .topic {
+         -webkit-user-select: text;
+         padding: 10px;
+         &>p.title {
+             margin: 10px 0;
+             padding-right: 60px;
+             a {
+                 text-decoration: none;
+                 font-size: 22px;
+                 font-weight: 600;
+                 color: #000;
+                 line-height: 28px;
+                 &:hover {
+                     color: #50bfff;
+                 }
+             }
+         }
+         .content {
+             * {
+                 max-width: 100% !important;
+             }
+         }
+     }
+ }
